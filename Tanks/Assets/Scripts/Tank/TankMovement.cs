@@ -16,7 +16,10 @@ public class TankMovement : MonoBehaviour
     private Rigidbody m_Rigidbody;         
     private float m_MovementInputValue;    
     private float m_TurnInputValue;        
-    private float m_OriginalPitch;         
+    private float m_OriginalPitch;
+
+    Vector3 movement=Vector3.zero;
+    public float friction = 0.7f;
 
 
     private void Awake()
@@ -100,7 +103,19 @@ public class TankMovement : MonoBehaviour
     {
         // Adjust the position of the tank based on the player's input.
 
-        Vector3 movement = transform.forward * m_MovementInputValue * m_Speed * Time.deltaTime;
+        //Vector3 movement;
+
+        if (Mathf.Abs(m_MovementInputValue) > 0.5f)
+        {
+            movement = transform.forward * m_MovementInputValue * m_Speed * Time.deltaTime;
+            //print("hola");
+        }
+        else
+        {
+            movement = movement * friction;
+            print("adeu");
+
+        }
 
         m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
     }
