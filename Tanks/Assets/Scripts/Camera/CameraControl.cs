@@ -5,7 +5,7 @@ public class CameraControl : MonoBehaviour
     public float m_DampTime = 0.2f;      //temps que te la camera per a fer el recorregut que se li ha asignat           
     public float m_ScreenEdgeBuffer = 4f;           //el numero que anyadim als costats per asegurarnos que els tanks(jugadors no sen ixen de la pantalla)
     public float m_MinSize = 6.5f;     //el minim que es pot minimitzar la camera (per a que no faja un zoom brutal)             
-    /*[HideInInspector]*/ public Transform[] m_Targets;  //HideInInspector serveix per a que esta variable publica no ixca en el inspector pero continua sent accesible desde altres scripts perque es una variable publica 
+    [HideInInspector] public Transform[] m_Targets;  //HideInInspector serveix per a que esta variable publica no ixca en el inspector pero continua sent accesible desde altres scripts perque es una variable publica 
 
 
     private Camera m_Camera;                        
