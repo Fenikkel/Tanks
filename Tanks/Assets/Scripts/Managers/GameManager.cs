@@ -10,15 +10,19 @@ public class GameManager : MonoBehaviour
     public float m_EndDelay = 3f;           
     public CameraControl m_CameraControl;   
     public Text m_MessageText;              
-    public GameObject m_TankPrefab;         
-    public TankManager[] m_Tanks;           
+    public GameObject m_TankPrefab;
+    public GameObject m_EnemyTankPrefab;
+    public TankManager[] m_Tanks;
+    public EnemyManager[] m_Enemy_Tanks;
 
 
     private int m_RoundNumber;              
     private WaitForSeconds m_StartWait;     
     private WaitForSeconds m_EndWait;       
     private TankManager m_RoundWinner;
-    private TankManager m_GameWinner;       
+    private TankManager m_GameWinner;
+    //private EnemyManager m_EnemyRoundWinner;
+    //private EnemyManager m_EnemyGameWinner;
 
 
     private void Start()
@@ -42,16 +46,29 @@ public class GameManager : MonoBehaviour
             m_Tanks[i].m_PlayerNumber = i + 1;
             m_Tanks[i].Setup();
         }
+
+        for (int i = 0; i < m_Enemy_Tanks.Length; i++)
+        {
+            m_Enemy_Tanks[i].m_Instance =
+                Instantiate(m_EnemyTankPrefab, m_Enemy_Tanks[i].m_SpawnPoint.position, m_Enemy_Tanks[i].m_SpawnPoint.rotation) as GameObject;
+            m_Enemy_Tanks[i].m_EnemyNumber = 11; //11 significara enemigo
+            m_Enemy_Tanks[i].Setup();
+        }
     }
 
 
     private void SetCameraTargets()
     {
-        Transform[] targets = new Transform[m_Tanks.Length];
+        Transform[] targets = new Transform[m_Tanks.Length + m_Enemy_Tanks.Length];
 
-        for (int i = 0; i < targets.Length; i++)
+        for (int i = 0; i < m_Tanks.Length; i++)
         {
             targets[i] = m_Tanks[i].m_Instance.transform;
+        }
+
+        for (int j = 0; j < m_Enemy_Tanks.Length; j++)
+        {
+            targets[j+ m_Tanks.Length] = m_Enemy_Tanks[j].m_Instance.transform;
         }
 
         m_CameraControl.m_Targets = targets;
